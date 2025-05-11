@@ -24,4 +24,7 @@ def ask(question: str) -> str:
     subprocess.Popen([
         "cmd", "/c", "start", "", sys.executable, "C:\\Users\\samue\\Documents\\dev\\python\\AskMCPServer\\ask-terminal.py", temp_file, question
     ])
-    return read_message_from_file(temp_file)
+    print(f"Parent: Waiting for message from child... {temp_file}")
+    message = read_message_from_file(temp_file)
+    print(f"Parent received: {message}")
+    return message + "(from Ask MCP Server)"
