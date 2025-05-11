@@ -1,19 +1,19 @@
-# server.py
+import os
+import tempfile
+import time
+import subprocess
+import sys
 from mcp.server.fastmcp import FastMCP
 
 # Create an MCP server
 mcp = FastMCP("Ask MCP", "1.0.0")
-
+temp_file = os.path.join(tempfile.gettempdir(), "ask_message_res_user.txt")
 
 # Add an addition tool
 @mcp.tool()
-def add(a: int, b: int) -> int:
-    """Add two numbers"""
-    return a + b
-
-
-# Add a dynamic greeting resource
-@mcp.resource("greeting://{name}")
-def get_greeting(name: str) -> str:
-    """Get a personalized greeting"""
-    return f"Hello, {name}!"
+def ask(question: str) -> str:
+    subprocess.Popen([
+        "cmd", "/c", "start", "", sys.executable, "C:\\Users\\samue\\Documents\\dev\\python\\AskMCPServer\\ask-terminal.py", temp_file, question
+    ])
+    time.sleep(10)
+    return "Samuel Liu"
