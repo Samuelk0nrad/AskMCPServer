@@ -6,7 +6,7 @@ import sys
 from mcp.server.fastmcp import FastMCP
 
 # Create an MCP server
-mcp = FastMCP("Ask2.0", "0.2.5")
+mcp = FastMCP("Ask2.1", "0.2.5")
 temp_file = os.path.join(tempfile.gettempdir(), "ask_message_res_user.txt")
 
 def read_message_from_file(filename):
@@ -19,23 +19,27 @@ def read_message_from_file(filename):
 
 # Add an addition tool
 @mcp.tool(
-    "ask132",
+    "ASK",
     "Ask a question if you are not sure what the user means"
     "or if you want to confirm something. "
-    "add predictedAnswer to the question to show the user what you think the answer is."
+    "add defaultAnswer to the question to show the user what you think the answer is."
     "you can also provide choices as a list to create a multiple choice question."
+    "you can provide context to give the user more information about your question."
     )
-def ask(question: str, predictedAnswer: str | None = None, choices: list[str] | None = None) -> str:
+def ask(question: str, defaultAnswer: str | None = None, choices: list[str] | None = None, context: str | None = None) -> str:
     """Ask a question and get a response from the user."""
     args = [
         sys.executable,  # Python executable
-        "C:\\Users\\samue\\Documents\\dev\\python\\AskMCPServer\\ask-terminal.py",  # Script path
+        "C:\\dev\\src\\python\\MCP\\AskMCPServer\\ask-terminal.py",  # Script path
         temp_file,  # Temporary file path
         question,  # Question to ask
-        predictedAnswer if predictedAnswer is not None else "No answer provided.",  # Predicted answer
+        defaultAnswer if defaultAnswer is not None else "No answer provided.",  # Default answer
     ]
     if choices:
         args.append("\";\"".join(choices))  # Join choices with ';'
+    
+    if context:
+        args.append(context)  # Add context if provided
 
     print(f"Parent: Starting child process with args: {args}")
 
