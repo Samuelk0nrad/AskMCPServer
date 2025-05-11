@@ -6,7 +6,7 @@ import sys
 from mcp.server.fastmcp import FastMCP
 
 # Create an MCP server
-mcp = FastMCP("Ask MCP2", "0.2.1")
+mcp = FastMCP("Ask-MCP", "0.2.1")
 temp_file = os.path.join(tempfile.gettempdir(), "ask_message_res_user.txt")
 
 def read_message_from_file(filename):
