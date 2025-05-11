@@ -9,11 +9,19 @@ from mcp.server.fastmcp import FastMCP
 mcp = FastMCP("Ask MCP", "1.0.0")
 temp_file = os.path.join(tempfile.gettempdir(), "ask_message_res_user.txt")
 
+def read_message_from_file(filename):
+    while not os.path.exists(filename):
+        time.sleep(0.1)
+    with open(filename, "r") as f:
+        message = f.read()
+    os.remove(filename)
+    return message
+
 # Add an addition tool
-@mcp.tool()
+@mcp.tool("Ask-the-user", "Ask the user a question and get a response.")
 def ask(question: str) -> str:
+    """Ask a question and get a response from the user."""
     subprocess.Popen([
         "cmd", "/c", "start", "", sys.executable, "C:\\Users\\samue\\Documents\\dev\\python\\AskMCPServer\\ask-terminal.py", temp_file, question
     ])
-    time.sleep(10)
-    return "Samuel Liu"
+    return read_message_from_file(temp_file)
