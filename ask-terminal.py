@@ -6,6 +6,7 @@ if len(sys.argv) < 2:
 
 filename = sys.argv[1].strip('"')
 question = sys.argv[2]
+predictedAnswer = sys.argv[3]
 
 GRAY = "\033[90m"
 CYAN = "\033[96m"
@@ -21,7 +22,8 @@ print()
 print(border)
 print("|" + BOLD + CYAN + question_padded + RESET + "|")
 print(border)
+print(GRAY + predictedAnswer + RESET)
 
 user_input = input("> ")
 with open(filename, "w") as f:
-  f.write(user_input)
+  f.write(user_input if user_input.strip() else predictedAnswer)

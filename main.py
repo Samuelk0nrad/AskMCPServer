@@ -19,10 +19,10 @@ def read_message_from_file(filename):
 
 # Add an addition tool
 @mcp.tool("Ask-the-user", "Ask the user a question and get a response.")
-def ask(question: str) -> str:
+def ask(question: str, predictedAnswer: str | None = None) -> str:
     """Ask a question and get a response from the user."""
     subprocess.Popen([
-        "cmd", "/c", "start", "", sys.executable, "C:\\Users\\samue\\Documents\\dev\\python\\AskMCPServer\\ask-terminal.py", temp_file, question
+        "cmd", "/c", "start", "", sys.executable, "C:\\Users\\samue\\Documents\\dev\\python\\AskMCPServer\\ask-terminal.py", temp_file, question, predictedAnswer
     ])
     print(f"Parent: Waiting for message from child... {temp_file}")
     message = read_message_from_file(temp_file)
