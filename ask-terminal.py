@@ -26,26 +26,30 @@ print(border)
 print(GRAY + predictedAnswer + RESET)
 
 if choices:
-    print("\nPlease select an option:")
+    print("\nPlease select an option or enter your own:")
     for i, choice in enumerate(choices, 1):
         print(f"{i}. {choice}")
-    while True:
-        user_input = input("> ")
-        if user_input.strip():
-            try:
-                choice_num = int(user_input)
-                if 1 <= choice_num <= len(choices):
-                    user_input = choices[choice_num - 1]
-                    break
+    print(f"{len(choices) + 1}. Enter your own answer")
+    
+    user_input = input("> ")
+    if not user_input.strip():
+        user_input = predictedAnswer
+    else:
+        try:
+            choice_num = int(user_input)
+            if 1 <= choice_num <= len(choices):
+                user_input = choices[choice_num - 1]
+            elif choice_num == len(choices) + 1:
+                print("Enter your custom answer:")
+                custom_input = input("> ")
+                if custom_input.strip():
+                    user_input = custom_input
                 else:
-                    print(f"Please enter a number between 1 and {len(choices)}")
-            except ValueError:
-                if user_input in choices:
-                    break
-                print("Please enter a valid option number or exact text")
-        else:
-            user_input = predictedAnswer
-            break
+                    user_input = predictedAnswer
+            # If it's not a valid number, keep the user's text input as is
+        except ValueError:
+            # Not a number, so keep the user's text input as is
+            pass
 else:
     user_input = input("> ")
 
